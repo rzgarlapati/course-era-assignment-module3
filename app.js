@@ -16,16 +16,12 @@ function foundItemsDirective(){
      items: '=',
      onRemove: '&'
  }
-  // controller: FoundItemsDirectiveController,
-  // controllerAs: 'foundItems',
-  // bindToController: true
+
 };
 
 return ddo;
 }
-function FoundItemsDirectiveController() {
 
-}
 
 
 
@@ -44,7 +40,16 @@ function NarrowItDownController(MenuSearchService){
     var promise = MenuSearchService.getSearchedBooks(bookSearchTerm);
 
     promise.then(function (response) {
-      controller.found = response.data.menu_items;
+      var items = response.data.menu_items;
+      items.forEach(function (item) {
+          var description = item.name.toLowerCase();
+          if (description.indexOf(controller.bookSearchTerm) >= 0) {
+              controller.found.push(item);
+          }
+      });
+
+
+
     })
     .catch(function (error) {
       console.log("Something went terribly wrong.");
@@ -52,7 +57,7 @@ function NarrowItDownController(MenuSearchService){
   }
 
   controller.removeItem = function (itemIndex) {
-    
+
     controller.found.splice(itemIndex,1);
 
 
