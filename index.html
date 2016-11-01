@@ -29,6 +29,10 @@
      <found-items
         items="narrow.found"
         on-remove="narrow.removeItem(index)"></found-items>
+
+        <div ng-if='narrow.found.length == 0'>
+          Nothing found
+      </div>
   </div>
 
 </body>
